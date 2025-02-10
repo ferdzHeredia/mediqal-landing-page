@@ -1,0 +1,46 @@
+const form = document.getElementById("myForm");
+const submitButton = form.querySelector("button");
+
+submitButton.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const organization = document.getElementById("lastName").value.trim();
+
+  // Check for empty names
+  if (!firstName || !lastName) {
+    alert("Please enter both First and Last Name");
+    return; // Exit if names are empty
+  }
+
+  // Call API Gateway endpoint (replace with your actual URL)
+  const apiUrl =
+    "https://llfdfck350.execute-api.us-east-2.amazonaws.com/prodcution/demoRequest";
+
+  const data = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    organization: organization,
+    jobPosition: "testPosition",
+  };
+
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log("API Response:", responseData);
+      // Handle successful response (e.g., display success message)
+    })
+    .catch((error) => {
+      console.error("API Error:", error);
+      // Handle API errors (e.g., display error message)
+    });
+});
